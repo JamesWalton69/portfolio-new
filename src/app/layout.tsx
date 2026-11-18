@@ -6,6 +6,7 @@ import { Cursor } from "@/components/cursor";
 import { CommandPalette } from "@/components/command-palette";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { MagneticFields } from "@/components/magnetic-fields";
+import { StyleSwitcher } from "@/components/style-switcher";
 import { caseStudies, person, SITE_URL } from "@/lib/content";
 
 const manrope = Manrope({
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           }
         />
         {children}
+        <StyleSwitcher />
       </body>
     </html>
   );

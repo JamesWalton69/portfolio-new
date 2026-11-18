@@ -1,7 +1,7 @@
 // Every {{placeholder}} is a blank to fill. `grep '{{' src/lib/content.ts`
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://riddhiman.loc.cc";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 
 export const person = {
   name: "Riddhiman Ghosh",

@@ -688,3 +688,60 @@
     cursor: none;
   }
 }
+
+/* Runtime style switcher. Each option only overrides presentation tokens and
+   a handful of layout rules, so content and interactions stay identical. */
+.style-switcher {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  z-index: 100;
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: rgb(10 10 10 / 82%);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 24%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  user-select: none;
+}
+.style-switcher button {
+  height: 26px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgb(255 255 255 / 60%);
+  font: inherit;
+  cursor: pointer;
+  transition: color 150ms ease-out;
+}
+.style-switcher button:hover { color: #fff; }
+.style-switcher button[data-active] { background: rgb(255 255 255 / 14%); color: #fff; }
+.style-switcher button:focus-visible { outline: 2px solid rgb(255 255 255 / 50%); outline-offset: 2px; }
+html:has(.proto-picker) .style-switcher { display: none; }
+
+html[data-site-style="magazine"] body { background: #fffdf7; color: #17150f; }
+html[data-site-style="magazine"] .hero-title { font-size: clamp(5rem, 12vw, 11rem); line-height: 0.86; letter-spacing: -0.09em; }
+html[data-site-style="magazine"] .shell { max-width: 74rem; }
+html[data-site-style="magazine"] :is(.heading-1, .heading-2) { font-weight: 700; letter-spacing: -0.04em; }
+
+html[data-site-style="terminal"] body { background: var(--color-ink); color: var(--color-cream); font-family: var(--font-geist-mono), monospace; }
+html[data-site-style="terminal"] :is(.hero-title, .heading-1, .heading-2, .display-1) { font-family: var(--font-geist-mono), monospace; letter-spacing: -0.05em; }
+html[data-site-style="terminal"] .ink-fade { background-image: none; color: var(--color-cream); -webkit-text-fill-color: currentColor; }
+html[data-site-style="terminal"] :where(.text-ink-soft, .text-ink-mute, .caption-2, .caption-3, .body-3, .body-6) { color: rgb(247 242 233 / 68%) !important; }
+html[data-site-style="terminal"] .hero-art { box-shadow: 0.75rem 0.75rem 0 var(--color-lime); }
+html[data-site-style="terminal"] nav[aria-label="Primary"] a,
+html[data-site-style="terminal"] nav[aria-label="Primary"] button { color: var(--color-cream) !important; transition: none !important; }
+
+html[data-site-style="prism"] body { background: #101222; color: #eef2ff; }
+html[data-site-style="prism"] .ink-fade { background-image: none; color: #eef2ff; -webkit-text-fill-color: currentColor; }
+html[data-site-style="prism"] :where(.text-ink-soft, .text-ink-mute, .caption-2, .caption-3, .body-3, .body-6) { color: rgb(238 242 255 / 70%) !important; }
+html[data-site-style="prism"] .hero-art { box-shadow: 0.75rem 0.75rem 0 #7c5cff; }
+html[data-site-style="prism"] nav[aria-label="Primary"] a,
+html[data-site-style="prism"] nav[aria-label="Primary"] button { color: #eef2ff !important; transition: none !important; }
