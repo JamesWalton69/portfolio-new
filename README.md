@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio
 
-## Getting Started
+Personal site for Riddhiman Ghosh. Next.js 16, Tailwind 4, one page plus a case
+study page per project.
 
-First, run the development server:
+The counts, language mix and push dates on the page come from the GitHub API for
+`JamesWalton69`, cached with ISR and rebuilt every 6 hours. Each case study also
+pulls its own language bytes and a 52 week commit series. Nothing is
+hand-maintained, so new repos show up on their own.
+
+The homepage also has a draggable 3D point-cloud globe drawn on canvas, a scroll
+progress line and active-section highlighting. All three respect
+`prefers-reduced-motion`, and the globe pauses when it scrolls off screen.
+
+## Run
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## The one file you edit
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`src/lib/content.ts` holds every string on the page. Placeholders are written as
+`{{likeThis}}`, so `grep '{{' src/lib/content.ts` lists all of them:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `linkedinUrl`
 
-## Learn More
+Everything else now comes from the published portfolio or from GitHub itself:
+the contact details, the timeline, the skill levels and the list of live
+deployments.
 
-To learn more about Next.js, take a look at the following resources:
+`caseStudies` is the list of projects. Each `repo` must match a real GitHub
+repository name: the case study page reads that repo's languages and commit
+activity. `slug` becomes the URL, `colour` picks the poster block behind the
+title. Leave `repo` empty for a proprietary project and add `demo` for the live
+deployment.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Set `NEXT_PUBLIC_SITE_URL` to the real domain (used for canonical and Open Graph
+tags). Optionally set `GITHUB_TOKEN` to lift the API rate limit from 60 to 5000
+requests an hour. Then deploy anywhere that runs Next.js with ISR, such as
+Vercel or a Node server. Static export will not work, because the page
+revalidates.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To force a refresh before the 6 hour window ends, hit the deployment's
+revalidation or redeploy. The window is `revalidate` in `src/app/page.tsx`.
